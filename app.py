@@ -10,12 +10,24 @@ from sqlalchemy import create_engine, func
 # dependency for flask
 from flask import Flask, jsonify
 
-engine = create_engine("sqlite:///hawaii.sqlite") 
-# connect_args={'check_same_thread': False})
+# engine = create_engine("sqlite:///hawaii.sqlite") 
+# # connect_args={'check_same_thread': False})
+# Base = automap_base()
+# Base.prepare(engine, reflect=True)
+# Measurement = Base.classes.measurement
+# Station = Base.classes.station
+
+engine = create_engine("sqlite:///hawaii.sqlite")
+
+# reflect an existing database into a new model
 Base = automap_base()
+# reflect the tables
 Base.prepare(engine, reflect=True)
+
+# Save references to each table
 Measurement = Base.classes.measurement
 Station = Base.classes.station
+
 # create a session link from Python to our database
 session = Session(engine)
 app = Flask(__name__)
@@ -36,12 +48,7 @@ def welcome():
     ''')
 
 
-print("app __name__ = %s", __name__)
-
-if __name__ == "__main__":
-    print("example is being run directly.")
-else:
-    print("example is being imported")
+# print("app __name__ = %s", __name__)
 
 # "flask run"
 # if __name__ == "__main__":
@@ -102,3 +109,9 @@ def stats(start=None, end=None):
 
 # if __name__ == "__main__":
 #     app.run(debug=True)
+
+if __name__ == "__main__":
+    print("example is being run directly.")
+    app.run(debug=True)
+else:
+    print("example is being imported")
